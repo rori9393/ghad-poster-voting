@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>مسابقة تصويت البوسترات | كلية الغد</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <noscript>يرجى تفعيل JavaScript لتشغيل الموقع.</noscript>
+
+    <header>
+      <div class="brand">
+        <img src="assets/college-logo.jpeg" alt="شعار كلية الغد" />
+        <div>
+          <strong>كلية الغد للعلوم الطبية التطبيقية</strong>
+          <small>• فرع جدة</small>
+        </div>
+      </div>
+
+      <button id="logout" class="quiet" type="button" hidden>
+        تسجيل الخروج
+      </button>
+    </header>
+
+    <main>
+      <div id="notice" role="status" aria-live="polite"></div>
+
+      <section id="login" class="landing">
+        <div class="hero">
+          <span class="eyebrow">إبداعك يستحق أن يُرى</span>
+
+          <div class="poster">
+            <img src="assets/saudi-emblem.png" alt="سيفان ونخلة" />
+          </div>
+
+          <h1>مسابقة تصويت البوسترات</h1>
+          <p>شارك بعملك، وصوّت للإبداع الذي يلهمك.</p>
+        </div>
+
+        <div class="panel">
+          <span class="eyebrow">أهلًا بك في المسابقة</span>
+          <h2 id="authTitle">تسجيل الدخول</h2>
+
+          <form id="loginForm" method="post">
+            <label>
+              الاسم الثلاثي
+              <input
+                name="name"
+                autocomplete="name"
+                required
+                maxlength="100"
+                placeholder="اكتب اسمك الثلاثي"
+              />
+            </label>
+
+            <label>
+              الرقم الأكاديمي
+              <input
+                name="academic"
+                type="text"
+                required
+                maxlength="30"
+                inputmode="numeric"
+                placeholder="اكتب رقمك الأكاديمي"
+              />
+            </label>
+
+            <label>
+              البريد الجامعي
+              <input
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                maxlength="254"
+                placeholder="اكتب بريدك الجامعي"
+                dir="ltr"
+              />
+            </label>
+
+            <fieldset>
+              <legend>الفئة</legend>
+
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="طالب"
+                  required
+                />
+                طالب
+              </label>
+
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="طالبة"
+                  required
+                />
+                طالبة
+              </label>
+            </fieldset>
+
+            <button id="authSubmit" class="primary" type="submit">
+              تسجيل الدخول
+            </button>
+
+            <p class="fine">
+              بياناتك لا تظهر للمشاركين في معرض البوسترات.
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <section id="home" hidden>
+        <div class="sectionHeading">
+          <div>
+            <span class="eyebrow">مسابقة البوسترات</span>
+            <h1>مساحة الإبداع</h1>
+            <p id="welcome"></p>
+          </div>
+        </div>
+
+        <div class="choices">
+          <button data-view="upload" class="choice" type="button">
+            <span class="icon" aria-hidden="true">＋</span>
+            <h2>إرفاق بوستر</h2>
+            <p>شارك تصميمك دون ظهور اسمك في المعرض.</p>
+            <span class="pill">إضافة مشاركة</span>
+          </button>
+
+          <button data-view="gallery" class="choice" type="button">
+            <span class="icon" aria-hidden="true">✓</span>
+            <h2>تصويت</h2>
+            <p>شاهد الأعمال ونتائج التصويت المباشرة.</p>
+            <span class="pill">استعراض الأعمال</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="upload" hidden>
+        <button class="quiet back" data-view="home" type="button">
+          العودة للرئيسية
+        </button>
+
+        <div class="panel uploadPanel">
+          <span class="eyebrow">مشاركتك القادمة</span>
+          <h1>إرفاق بوستر</h1>
+
+          <p class="fine">
+            سيظهر البوستر في المعرض برقم مشاركة، دون اسم صاحبه.
+          </p>
+
+          <form id="uploadForm" method="post">
+            <label class="dropzone">
+              اختر صورة أو ملف بوستر
+              <span>JPG · PNG · WEBP · PDF — حتى 5 ميجابايت</span>
+
+              <input
+                id="file"
+                name="file"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,application/pdf"
+                required
+              />
+            </label>
+
+            <div id="preview"></div>
+
+            <progress
+              id="progress"
+              aria-label="حالة رفع البوستر"
+              value="0"
+              max="100"
+              hidden
+            ></progress>
+
+            <button class="primary" type="submit">
+              نشر البوستر
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section id="gallery" hidden>
+        <button class="quiet back" data-view="home" type="button">
+          العودة للرئيسية
+        </button>
+
+        <div class="sectionHeading">
+          <div>
+            <span class="eyebrow">معرض المشاركات</span>
+            <h1>صوّت للإبداع</h1>
+            <p>صوت واحد لكل بوستر. يمكنك التصويت لأكثر من عمل.</p>
+          </div>
+
+          <span id="live" class="live">جارٍ الاتصال…</span>
+        </div>
+
+        <div class="stats">
+          <div>
+            <strong id="postCount">٠</strong>
+            <span>بوستر مشارك</span>
+          </div>
+
+          <div>
+            <strong id="voteCount">٠</strong>
+            <span>صوت في المسابقة</span>
+          </div>
+        </div>
+
+        <div id="grid" class="grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      كلية الغد للعلوم الطبية التطبيقية • فرع جدة
+    </footer>
+
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>
